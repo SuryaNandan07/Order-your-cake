@@ -3,6 +3,18 @@ import { OrbitControls, useGLTF } from "@react-three/drei";
 import { useEffect } from "react";
 import * as THREE from "three";
 
+
+function CandleModel({ position }) {
+  const { scene } = useGLTF("/models/candle.glb");
+
+  return (
+    <primitive
+      object={scene.clone()}
+      position={position}
+      scale={0.25}
+    />
+  );
+}
 function CakeModel({
   cakeColor,
   topColor = "#ffb6c1",
@@ -43,19 +55,31 @@ export default function Cake3DViewer({
   cakeColor,
   topColor,
   creamColor,
+  candles = [],
+
 }) {
   return (
-    <div className="w-[600px] h-[500px] bg-white rounded-xl shadow">
+    <div className="h-[360px] w-full overflow-hidden rounded-2xl bg-[#fff7ed] shadow-inner">
       <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
         <ambientLight intensity={3} />
         <directionalLight position={[5, 5, 5]} intensity={2} />
         <directionalLight position={[-5, 5, -5]} intensity={1.5} />
-
+        console.log("3D candles:", candles);
         <CakeModel
           cakeColor={cakeColor}
           topColor={topColor}
           creamColor={creamColor}
         />
+        {candles.map((candle) => (
+          <CandleModel
+            key={candle.id}
+            position={[
+              candle.x / 100,
+              1.6,
+              candle.y / 100,
+            ]}
+          />
+        ))}
 
         <OrbitControls />
       </Canvas>

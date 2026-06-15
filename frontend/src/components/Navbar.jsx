@@ -5,6 +5,7 @@ const navLinks = [
   { to: '/cakes', label: 'Cakes' },
   { to: '/cart', label: 'Cart' },
   { to: '/owner', label: 'Owner' },
+  { to: '/CakeStudio', label: 'CakeStudio'}
 ]
 
 function Navbar() {
